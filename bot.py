@@ -146,12 +146,13 @@ def add_contact(args, book: AddressBook):
 
 
 @input_error
-def change_contact(args, book):
-    if len(args) < 2:
-        raise ValueError('Add name and new phone')
-    name, new_phone = args
+def change_contact(args, book: AddressBook):
+    if len(args) < 3:
+        raise ValueError('Add name, old phone and new phone')
+    name, old_phone, new_phone = args
+    record = book.find(name)
     if name in book:
-        book[name] = new_phone
+        record.edit_phone(old_phone,new_phone)
         return "Contact updated."
     else:
         return "Contact not found."
